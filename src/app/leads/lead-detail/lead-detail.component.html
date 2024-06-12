@@ -1,0 +1,145 @@
+<div class="lead-overwiew">
+      <div class="overview-container">
+
+        <mat-card class="card">
+          <div class="headline">
+              <h2>Overview</h2>
+          </div>
+          <div *ngIf="this.addService.docData" class="details">
+              <div class="data-table">
+                  <div class="data-row">
+                    <div class="data-label">Name:</div>
+                    <div class="data-value">{{ this.addService.docData.name }}</div>
+                  </div>
+                  <div class="data-row">
+                    <div class="data-label">Company:</div>
+                    <div class="data-value">{{ this.addService.docData.company }}</div>
+                  </div>
+                  <div class="data-row">
+                    <div class="data-label">E-Mail:</div>
+                    <div class="data-value">{{ this.addService.docData.email }}</div>
+                  </div>
+                  <div class="data-row">
+                    <div class="data-label">Tel:</div>
+                    <div class="data-value">{{ this.addService.docData.telNumber }}</div>
+                  </div>
+                  <div class="data-row">
+                    <div class="data-label">Address:</div>
+                    <div class="data-value">{{ this.addService.docData.street }}, {{ this.addService.docData.zipCode }} {{ this.addService.docData.city }}</div>
+                  </div>
+                  <div class="data-row">
+                      <div class="data-label">Creation date:</div>
+                      <div class="data-value">{{ this.addService.docData.timestamp | date:'fullDate' }}</div>
+                    </div>
+                </div>
+          </div>
+        </mat-card>
+        
+        <mat-card *ngIf="leadQualiInfos" class="card">
+          <div class="headline">
+            <h2>Overview qualification call</h2>
+          </div>
+          <div class="details">
+            <div class="data-table">
+              <div *ngIf="this.leadQualiInfos.problemSolving !== ''" class="data-row">
+                <div class="data-label">Problem to solve:</div>
+                <div class="data-value">{{ this.leadQualiInfos.problemSolving }}</div>
+              </div>
+              <div *ngIf="this.leadQualiInfos.currentlyUse !== ''"  class="data-row">
+                <div class="data-label">Currently in use:</div>
+                <div class="data-value">{{ this.leadQualiInfos.currentlyUse }}</div>
+              </div>
+              <div *ngIf="this.leadQualiInfos.NotLike !== ''" class="data-row">
+                <div class="data-label">Currently dislike:</div>
+                <div class="data-value">{{ this.leadQualiInfos.NotLike }}</div>
+              </div>
+              <div *ngIf="this.leadQualiInfos.budget !== ''" class="data-row">
+                <div class="data-label">Budget:</div>
+                <div class="data-value">{{ this.leadQualiInfos.budget}} €</div>
+              </div>
+              <div *ngIf="this.leadQualiInfos.notice !== ''" class="data-row">
+                <div class="data-label">Notice:</div>
+                <div class="data-value">{{ this.leadQualiInfos.notice }}</div>
+              </div>
+              <div class="data-row">
+                <div class="data-label">Follow up date:</div>
+                <div class="data-value">{{ this.leadQualiInfos.followUpDate | date:'fullDate' }}</div>
+              </div>
+            </div>
+          </div>
+          
+        </mat-card>
+
+      </div>
+      
+      <div>
+        <mat-card class="card" *ngIf="this.leadSaleInfos" >
+          <div class="headline">
+            <h2>Overview Sale call</h2>
+          </div>
+          <div class="details">
+            <div class="data-table">
+              <div class="data-row">
+                <div class="data-label">Company description:</div>
+                <div class="data-value">{{ this.leadSaleInfos.companyDescription }}</div>
+              </div>
+              <div class="data-row">
+                <div class="data-label">Goal of investment</div>
+                <div class="data-value">{{ this.leadSaleInfos.goalInvestment }}</div>
+              </div>
+              <div class="data-row">
+                <div class="data-label">Important requirements:</div>
+                <div class="data-value">{{ this.leadSaleInfos.importantRequirements }}</div>
+              </div>
+              <div class="data-row">
+                <div class="data-label">Notice:</div>
+                <div class="data-value">{{ this.leadSaleInfos.notice }}</div>
+              </div>
+              <div class="data-row">
+                <div class="data-label">Time Frame date:</div>
+                <div class="data-value">{{ this.leadSaleInfos.timeFrameDate | date:'fullDate' }}</div>
+              </div>
+              <div class="data-row">
+                <div class="data-label">Amount sold:</div>
+                <div class="data-value">{{ this.leadSaleInfos.amountSold }} €</div>
+              </div>
+            </div>
+          </div>
+          
+        </mat-card>
+      </div>
+
+    <mat-card class="card" *ngIf="this.addService.docData">
+        <div class="headline">
+            <h2>Todos</h2>
+        </div>
+        <div class="qualiCall" *ngIf="this.addService.docData.status == 'Not qualified'">
+          <mat-icon>notifications</mat-icon>
+          <span>{{ this.addService.docData.name }} not qualified.</span>
+        </div>
+        <div class="qualiCall" *ngIf="this.addService.docData.status == 'New'" (click)="openDialogAddQualiCall()">
+            <mat-icon>notifications</mat-icon>
+            <span>Qualification call with {{ this.addService.docData.name }} on <b>{{this.getDateForQualiCall() | date:"fullDate" }}</b></span>
+        </div>
+        <div class="qualiCall" *ngIf="this.addService.docData.status == 'Qualified'" (click)="openDialogAddSaleCall()">
+          <mat-icon>notifications</mat-icon>
+          <span>Sale call with {{ this.addService.docData.name }} on <b>{{this.leadQualiInfos?.followUpDate | date:"fullDate" }}</b></span>
+        </div>
+        <div class="qualiCall" *ngIf="this.addService.docData.status == 'Sold'">
+          <mat-icon>notifications</mat-icon>
+          <mat-checkbox class="example-margin" [(ngModel)]="isProduction" (change)="setSaledToProduction()" >Put into production</mat-checkbox>
+        </div>
+        <div class="qualiCall" *ngIf="this.addService.docData.status == 'Sold'">
+          <mat-icon>check</mat-icon>
+          <span> The order "{{ this.addService.docData.name }}" has been sold.</span>
+        </div>
+        <div class="qualiCall" *ngIf="this.addService.docData.status == 'Production'">
+          <mat-icon>notifications</mat-icon>
+          <mat-checkbox class="example-margin" [(ngModel)]="isDone" (change)="setSaledToCompleted()" >Done with production?</mat-checkbox>
+        </div>
+        <div class="qualiCall" *ngIf="this.addService.docData.status == 'Completed'">
+          <mat-icon>check</mat-icon>
+          <span> The order "{{ this.addService.docData.name }}" is been Completed.</span>
+        </div>
+    </mat-card>
+</div>

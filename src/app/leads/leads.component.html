@@ -1,0 +1,26 @@
+<mat-card>
+    <mat-card-content>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Ansprechpartner</th>
+                <th>Firma</th>
+                <th>Status</th>
+                <th>Erstellungsdatum</th>
+                <th>Interesse</th>
+            </tr>
+            <tr *ngFor="let lead of allLeads" [routerLink]="['/lead', lead.id]">
+                <td> {{ lead.leadNr }} </td>
+                <td> {{ lead.name }} </td>
+                <td> {{ lead.company }} </td>
+                <td> {{ lead.status }} </td>
+                <td> {{ lead.timestamp | date:'fullDate' }} </td>
+                <td> {{ lead.product }} </td>
+            </tr>
+        </table>
+    </mat-card-content>
+  </mat-card>
+
+  <button (click)="openLeadDialog()" class="add-lead-btn" mat-fab matTooltip="Add a new Lead">
+    <mat-icon>add</mat-icon>
+  </button>

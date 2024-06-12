@@ -1,0 +1,41 @@
+.contact-detail-container {
+    min-height: 200px;
+    background-color: #CD7F32;
+    color: #fff;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 16px;
+
+    .contact-detail-content {
+        display: flex;
+        gap: 30px;
+
+        .contact-data {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            h2 {
+                margin: 0;
+            }
+        }
+    }
+
+    img {
+        width: 100px;
+    }
+}
+
+.adress-container {
+    margin-top: 30px;
+}
+
+.hedaline-adress-card {
+    display: flex;
+    justify-content: space-between;
+}
+
+.adress-card {
+    padding: 18px;
+}
